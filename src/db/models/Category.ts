@@ -1,31 +1,31 @@
-import { DataTypes, Model, ModelStatic, Optional } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import sequelizeConnection from "../config";
 
-interface IngredientAttributes {
+interface CategoryAttributes {
   id: number;
   name: string;
   slug: string;
-  description?: string;
-  foodGroup?: string;
+  count?: number;
+  parent_id?: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
 
-export interface IngredientInput
-  extends Optional<IngredientAttributes, "id" | "slug"> {}
+export interface CategoryInput
+  extends Optional<CategoryAttributes, "id" | "slug"> {}
 
-export interface IngredientOuput extends Required<IngredientAttributes> {}
+export interface CategoryOutput extends Required<CategoryAttributes> {}
 
-class Ingredient
-  extends Model<IngredientAttributes, IngredientInput>
-  implements IngredientAttributes
+class Category
+  extends Model<CategoryAttributes, CategoryInput>
+  implements CategoryAttributes
 {
   public id!: number;
   public name!: string;
   public slug!: string;
-  public description!: string;
-  public foodGroup!: string;
+  public parent_id!: number;
+  public count!: number;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -33,7 +33,7 @@ class Ingredient
   public readonly deletedAt!: Date;
 }
 
-Ingredient.init(
+Category.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -49,11 +49,13 @@ Ingredient.init(
       allowNull: false,
       unique: true,
     },
-    description: {
-      type: DataTypes.TEXT,
+    parent_id: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
-    foodGroup: {
-      type: DataTypes.STRING,
+    count: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {
@@ -62,4 +64,4 @@ Ingredient.init(
   }
 );
 
-export default Ingredient;
+export default Category;

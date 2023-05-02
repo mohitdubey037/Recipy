@@ -68,10 +68,10 @@ Review.init({
     sequelize: sequelizeConnection
 })
 
-Review.belongsTo(Recipe, {
-    foreignKey: {
-        allowNull: false
-    }
-})
+// Review.belongsTo(Recipe, {
+//     foreignKey: {
+//         allowNull: false
+//     }
+// })
 
 export default Review
