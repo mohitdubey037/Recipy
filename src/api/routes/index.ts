@@ -5,6 +5,7 @@ import recipesRouter from "./recipes";
 import reviewsRouter from "./reviews";
 import tagsRouter from "./tags";
 import postsRouter from "./posts";
+import authRouter from './auth';
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/ingredients", ingredientsRouter);
 router.use("/reviews", reviewsRouter);
 router.use("/tags", tagsRouter);
 router.use("/posts", postsRouter);
+router.use('/user', authRouter);
 
 export default router;

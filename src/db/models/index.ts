@@ -6,7 +6,7 @@ import RecipeTag from "./RecipeTag";
 import RecipeIngredient from "./RecipeIngredient";
 import Category from "./Category";
 import Post from './Post';
-
+import User from './Auth';
 export {
   Tag,
   Recipe,
@@ -15,5 +15,6 @@ export {
   RecipeTag,
   RecipeIngredient,
   Category,
-  Post
+  Post,
+  User
 };

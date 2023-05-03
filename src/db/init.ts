@@ -8,7 +8,8 @@ import {
   Ingredient,
   RecipeIngredient,
   Category,
-  Post
+  Post,
+  User
 } from "./models";
 
 // const isDev = process.env.NODE_ENV === "development";
@@ -25,6 +26,7 @@ const dbInit = () =>
     RecipeIngredient.sync(/* { alter: isDev || isTest } */),
     Category.sync(/* { alter: isDev || isTest } */),
     Post.sync(/* { alter: true } */),
+    User.sync(/* { alter: true } */)
   ]);
 
 export default dbInit;
