@@ -11,3 +11,7 @@ export interface LoginUser {
     email: string;
     password: string;
 }
+
+export interface emailVerification {
+    email: string
+}
