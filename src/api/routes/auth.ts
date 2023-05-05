@@ -1,9 +1,7 @@
 import { Router, Request, Response } from "express";
 import * as controller from "../controllers/auth";
-import httpStatus from 'http-status';
 
-
-import { CreateUserDTO } from "../dto/auth.dto";
+import { CreateUserDTO, LoginUserDTO } from "../dto/auth.dto";
 
 const authRouter = Router();
 
@@ -11,12 +9,7 @@ authRouter.post("/register", async (req: Request, res: Response) => {
     const payload: CreateUserDTO = req.body;
     try {
         const result = await controller.createUser(payload);
-        res.status(httpStatus.OK).send({
-            message: "User Registered successfully!",
-            status: httpStatus.OK,
-            result: result,
-            success: true,
-          });
+        return res.status(200).send(result);
     }
     catch(error: any) {
         res.status(error.status).send({
@@ -24,6 +17,22 @@ authRouter.post("/register", async (req: Request, res: Response) => {
             status: error.status,
             success: error.success,
         });
+    }
+});
+
+authRouter.post("/login", async (req: Request, res: Response) => {
+    const payload: LoginUserDTO = req.body;
+    try {
+        const result = await controller.loginUser(payload);
+        return res.status(200).send(result);
+    }
+    catch(error: any) {
+        console.log(error, 'error');
+        // res.status(error.status).send({
+        //     message: error.message,
+        //     status: error.status,
+        //     success: error.success,
+        // });
     }
 });
 

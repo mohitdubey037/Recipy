@@ -1,5 +1,5 @@
-import { CreateUserDTO } from "../../dto/auth.dto";
-import { CreateUser } from "../../interfaces";
+import { CreateUserDTO, LoginUserDTO } from "../../dto/auth.dto";
+import { CreateUser, LoginUser } from "../../interfaces";
 
 import * as mapper from "./mapper"
 
@@ -10,3 +10,10 @@ export const createUser = async (
   ): Promise<CreateUser> => {
     return mapper.ToAuth(await service.createUser(payload));
   };
+
+  export const loginUser = async (
+    payload: LoginUserDTO
+  ): Promise<LoginUser> => {
+    return await service.loginUser(payload);
+  };
+  

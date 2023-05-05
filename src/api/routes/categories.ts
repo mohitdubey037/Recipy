@@ -1,11 +1,12 @@
 import { Router, Request, Response } from "express";
+import verifyToken from "../../middlewares/admin-auth";
 
 import * as controller from "../controllers/category";
 import { CreateCategoryDTO } from "../dto/category.dto";
 
 const categoriesRouter = Router();
 
-categoriesRouter.get("/", async (req: Request, res: Response) => {
+categoriesRouter.get("/", verifyToken, async (req: Request, res: Response) => {
   const results = await controller.getAll();
   return res.status(200).send(results);
 });
