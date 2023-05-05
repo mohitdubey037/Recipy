@@ -1,4 +1,5 @@
 import { Router, Request, Response} from 'express'
+import verifyToken from '../../middlewares/admin-auth'
 
 import * as ingredientController from '../controllers/ingredient'
 import {CreateIngredientDTO, FilterIngredientsDTO, UpdateIngredientDTO} from '../dto/ingredient.dto'
@@ -12,7 +13,7 @@ ingredientsRouter.get(':/id', async (req: Request, res: Response) => {
     return res.status(200).send(result)
 })
 
-ingredientsRouter.put('/:id', async (req: Request, res: Response) => {
+ingredientsRouter.put('/:id', verifyToken, async (req: Request, res: Response) => {
     const id = Number(req.params.id)
     const payload:UpdateIngredientDTO = req.body
     
@@ -20,7 +21,7 @@ ingredientsRouter.put('/:id', async (req: Request, res: Response) => {
     return res.status(201).send(result)
 })
 
-ingredientsRouter.delete('/:id', async (req: Request, res: Response) => {
+ingredientsRouter.delete('/:id', verifyToken, async (req: Request, res: Response) => {
     const id = Number(req.params.id)
     
     const result = await ingredientController.deleteById(id)
@@ -29,7 +30,7 @@ ingredientsRouter.delete('/:id', async (req: Request, res: Response) => {
     })
 })
 
-ingredientsRouter.post('/', async (req: Request, res: Response) => {
+ingredientsRouter.post('/', verifyToken, async (req: Request, res: Response) => {
     const payload:CreateIngredientDTO = req.body
 
     const result = await ingredientController.create(payload)

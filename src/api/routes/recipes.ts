@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express'
 import { GetAllRecipesFilters } from '../../db/dal/types'
+import verifyToken from '../../middlewares/admin-auth'
 
 import * as controller from '../controllers/recipes'
 import { CreateRecipeDTO, UpdateRecipeDTO } from '../dto/recipe.dto'
@@ -22,7 +23,7 @@ recipesRouter.get('/:id', async (req: Request, res: Response) => {
     return res.status(200).send(result)
 })
 
-recipesRouter.put('/:id', async (req: Request, res: Response) => {
+recipesRouter.put('/:id', verifyToken, async (req: Request, res: Response) => {
     const id = Number(req.params.id)
     const payload: UpdateRecipeDTO = req.body
 
@@ -31,7 +32,7 @@ recipesRouter.put('/:id', async (req: Request, res: Response) => {
     return res.status(200).send(result)
 })
 
-recipesRouter.delete('/:id', async (req: Request, res: Response) => {
+recipesRouter.delete('/:id', verifyToken, async (req: Request, res: Response) => {
     const id = Number(req.params.id)
 
     const result = await controller.deleteById(id)
@@ -41,7 +42,7 @@ recipesRouter.delete('/:id', async (req: Request, res: Response) => {
     })
 })
 
-recipesRouter.post('/', async (req: Request, res: Response) => {
+recipesRouter.post('/', verifyToken, async (req: Request, res: Response) => {
     const payload: CreateRecipeDTO = req.body
 
     const result = await controller.create(payload)

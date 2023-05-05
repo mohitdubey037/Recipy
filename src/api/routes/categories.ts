@@ -16,7 +16,7 @@ categoriesRouter.get("/:slug", async (req: Request, res: Response) => {
   // load recipes related
 });
 
-categoriesRouter.post("/", async (req: Request, res: Response) => {
+categoriesRouter.post("/", verifyToken, async (req: Request, res: Response) => {
   // create food category
   const payload: CreateCategoryDTO = req.body;
 
@@ -24,7 +24,7 @@ categoriesRouter.post("/", async (req: Request, res: Response) => {
   return res.status(200).send(results);
 });
 
-categoriesRouter.put("/:id", async (req: Request, res: Response) => {
+categoriesRouter.put("/:id", verifyToken, async (req: Request, res: Response) => {
   // update category
   const id = Number(req.params.id);
   const payload: CreateCategoryDTO = req.body;
@@ -33,7 +33,7 @@ categoriesRouter.put("/:id", async (req: Request, res: Response) => {
   return res.status(200).send(results);
 });
 
-categoriesRouter.delete("/:id", async (req: Request, res: Response) => {
+categoriesRouter.delete("/:id", verifyToken, async (req: Request, res: Response) => {
   // delete category
   const id = Number(req.params.id);
 
