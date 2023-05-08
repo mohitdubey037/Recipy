@@ -120,11 +120,8 @@ export const registerEmail = async (payload:emailVerification): Promise<any> => 
   // return info;
 }
 
-export const verifyOtp = async(payload: emailVerification) : Promise<any> => {
-  // here we will verify the otp
-  console.log(payload, 'payloaddd');
-  if (payload.otp) {
-    await authDal.findById(payload.otp)
-  } 
-
+export const verifyOtp = async(payload: {
+  otp: number
+}) : Promise<any> => {
+  await authDal.findById(payload.otp)
 }

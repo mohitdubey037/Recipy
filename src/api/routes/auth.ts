@@ -48,16 +48,12 @@ authRouter.post('/registerEmail', async (req: Request, res: Response) => {
     }
 })  
 
-authRouter.post('/verifyOtp/:emailId',async (req: Request, res: Response) => {
-    const params: string = req.params.emailId;
-    const payload: Object = req.body;
-    const otpPayload = {
-        email: params,
-        ...payload
-    }
+authRouter.post('/verifyOtp',async (req: Request, res: Response) => {
+    const payload: {
+        otp: number
+    } = req.body;
     try {
-        await controller.verifyOtp(otpPayload);
-        // return res.status(200).send('Otp verified successfully');
+        await controller.verifyOtp(payload);
         return res.status(200).send({
             message: 'Otp verified successfully',
             success: true,

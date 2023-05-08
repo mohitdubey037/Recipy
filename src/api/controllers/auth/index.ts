@@ -22,6 +22,8 @@ export const registerEmail = async (payload:emailVerification) : Promise<any> =>
   return await service.registerEmail(payload);
 }
 
-export const verifyOtp = async (payload: emailVerification) : Promise<any> => {
+export const verifyOtp = async (payload: {
+  otp: number
+}) : Promise<any> => {
   return await service.verifyOtp(payload);
 }
