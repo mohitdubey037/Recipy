@@ -18,10 +18,10 @@ export const loginUser = async (
   return await service.loginUser(payload);
 };
   
-export const verifyEmail = async (payload:emailVerification) : Promise<any> => {
-  return await service.verifyEmail(payload);
+export const registerEmail = async (payload:emailVerification) : Promise<any> => {
+  return await service.registerEmail(payload);
 }
 
-export const verifyOtp = async (payload: number) : Promise<any> => {
-  return await service.verifyOtp(payload)
+export const verifyOtp = async (payload: emailVerification) : Promise<any> => {
+  return await service.verifyOtp(payload);
 }

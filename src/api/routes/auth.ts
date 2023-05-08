@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import * as authDal from '../../db/dal/auth'
 import * as controller from "../controllers/auth";
 
 import { CreateUserDTO, LoginUserDTO } from "../dto/auth.dto";
@@ -37,20 +38,39 @@ authRouter.post("/logout", async (req: Request, res: Response) => {
     return res.status(200).send([]);
 });
 
-authRouter.post('/verifyEmail', async (req: Request, res: Response) => {
+authRouter.post('/registerEmail', async (req: Request, res: Response) => {
     const payload:emailVerification = req.body;
     try {
-        const result = await controller.verifyEmail(payload);
-        console.log(result, 'result');
+        await controller.registerEmail(payload);
         return res.status(200).send('Email sent successfully');
     } catch (error: any) {
         console.log(error, 'error')
     }
 })  
 
-authRouter.post('/verifyOtp',async (req: Request, res: Response) => {
-    const payload: number = req.body
-    await controller.verifyOtp(payload);
+authRouter.post('/verifyOtp/:emailId',async (req: Request, res: Response) => {
+    const params: string = req.params.emailId;
+    const payload: Object = req.body;
+    const otpPayload = {
+        email: params,
+        ...payload
+    }
+    try {
+        await controller.verifyOtp(otpPayload);
+        // return res.status(200).send('Otp verified successfully');
+        return res.status(200).send({
+            message: 'Otp verified successfully',
+            success: true,
+            flag: 1
+        });
+    }
+    catch(error: any) {
+        return res.status(404).send({
+            message: error.message,
+            success: false,
+            flag: 0
+        });
+    }
 })
 
 

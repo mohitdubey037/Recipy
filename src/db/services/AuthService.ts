@@ -75,12 +75,9 @@ export const loginUser = async (
     return null;
 }
 
-export const verifyEmail = async (payload:emailVerification): Promise<any> => {
-  console.log(payload, 'payload')
+export const registerEmail = async (payload:emailVerification): Promise<any> => {
   // let testAccount = await nodemailer.createTestAccount();
   let generatedOtp = generateOTP();
-
-  console.log(generatedOtp, 'generatedOTP');
 
   try {
     let transporter = await nodemailer.createTransport({
@@ -111,7 +108,7 @@ export const verifyEmail = async (payload:emailVerification): Promise<any> => {
       otp: generatedOtp
     }
 
-    const result = await authDal.createUserService(otpPayload);
+    await authDal.createUserService(otpPayload);
 
   }
 
@@ -123,7 +120,11 @@ export const verifyEmail = async (payload:emailVerification): Promise<any> => {
   // return info;
 }
 
-export const verifyOtp = async(payload: number) : Promise<any> => {
+export const verifyOtp = async(payload: emailVerification) : Promise<any> => {
   // here we will verify the otp
-  console.log('hii')
+  console.log(payload, 'payloaddd');
+  if (payload.otp) {
+    await authDal.findById(payload.otp)
+  } 
+
 }

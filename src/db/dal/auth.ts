@@ -58,15 +58,10 @@ export const comparePassword = (passwordAttempt: string, hashedPassword: string)
 	return compare(passwordAttempt, hashedPassword);
 };
 
-// export const updateUser = async (updateData: Object, query: Object) => {
-// 	const updatedUser = await User.update(updateData, query);
-// 	if (!updatedUser) {
-// 	  const error = {
-// 		status: httpStatus.BAD_REQUEST,
-// 		message: "Somthing went wrong to update the user!",
-// 		success: false,
-// 	  };
-// 	  throw error;
-// 	}
-// 	return updatedUser;
-// };
+export const findById = async (otp: number): Promise<Object> => {
+	const findUser = await User.findOne({ where: { otp } });
+	if (!findUser) {
+		throw new Error("No User found");
+	}
+	return findUser
+  };
