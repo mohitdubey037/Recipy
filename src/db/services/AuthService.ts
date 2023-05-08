@@ -36,14 +36,23 @@ const generateJWTToken = (payload: Object) => {
 	return token;
 };
 
+const generateOTP = (): number => {
+  var minm = 100000;
+  var maxm = 999999;
+  const freshOtp =  Math.floor(Math.random() * (maxm - minm + 1)) + minm;
+  return freshOtp;
+}
+
 export const createUser = async (
     payload: UserInput
 ): Promise<any> => {
     // let slug = kebabCase(payload.name);
-    const findUser = await authDal.findUserByEmail(payload.email, 'register');
-    const hashed = await hashPassword(payload?.password);
+    if (payload.password) {
+      const findUser = await authDal.findUserByEmail(payload.email, 'register');
+      const hashed = await hashPassword(payload?.password);
+      payload.password = hashed;
+    }
 
-    payload.password = hashed;
     const result = await authDal.createUserService(payload);
     return result; 
 }
@@ -66,33 +75,52 @@ export const loginUser = async (
     return null;
 }
 
-export const verifyEmail = async (params:emailVerification): Promise<any> => {
-  console.log(params, 'params')
-  let testAccount = await nodemailer.createTestAccount();
+export const verifyEmail = async (payload:emailVerification): Promise<any> => {
+  console.log(payload, 'payload')
+  // let testAccount = await nodemailer.createTestAccount();
+  let generatedOtp = generateOTP();
 
+  console.log(generatedOtp, 'generatedOTP');
+
+  try {
+    let transporter = await nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+        user: 'abigayle.reilly@ethereal.email', // generated ethereal user
+        pass: '5c7bvXkbwpmQsWHavV' // generated ethereal password
+      }
+    })
+  
+    let info = await transporter.sendMail({
+      from: '"mohit dubey " <abigayle.reilly@ethereal.email>', // sender address
+      to: `${payload.email}`, // list of receivers
+      subject: "E-Mail Verification", // subject line
+      text: "Email Generation Successfully.You must have received the Otp for validation", // plain text body
+      html: `
+      <div>
+        <h3>Welcome to the club</h3>
+        <h3>Below is the generated Otp</h3>
+        <h3>${generatedOtp}</h3>
+      </div>
+      `
+    })
+
+    let otpPayload = {
+      email: payload.email,
+      otp: generatedOtp
+    }
+
+    const result = await authDal.createUserService(otpPayload);
+
+  }
+
+  catch(error){
+    throw error
+  }
   //connect with the smtp
-  let transporter = await nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    auth: {
-      user: 'abigayle.reilly@ethereal.email', // generated ethereal user
-      pass: '5c7bvXkbwpmQsWHavV' // generated ethereal password
-    },
-  })
 
-  let info = await transporter.sendMail({
-    from: '"mohit dubey " <abigayle.reilly@ethereal.email>', // sender address
-    to: `${params.email}`, // list of receivers
-    subject: "E-Mail Verification", // subject line
-    text: "Email Generation Successfully.You must have received the Otp for validation", // plain text body
-    html: `
-    <div>
-      <h3>Welcome to the club</h3>
-    </div>
-    `
-  })
-
-  return info;
+  // return info;
 }
 
 export const verifyOtp = async(payload: number) : Promise<any> => {

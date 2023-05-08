@@ -37,7 +37,7 @@ authRouter.post("/logout", async (req: Request, res: Response) => {
     return res.status(200).send([]);
 });
 
-authRouter.post('/email', async (req: Request, res: Response) => {
+authRouter.post('/verifyEmail', async (req: Request, res: Response) => {
     const payload:emailVerification = req.body;
     try {
         const result = await controller.verifyEmail(payload);

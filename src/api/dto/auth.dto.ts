@@ -11,3 +11,8 @@ export type LoginUserDTO = {
   email: string;
   password: string;
 }
+
+export type EmailVerifyDTO = {
+  email: string;
+  otp: number;
+}

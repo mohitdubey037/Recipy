@@ -7,15 +7,16 @@ import { Optional } from "sequelize";
 interface UserAttribute {
     id: number;
     slug: string;
-    name: string;
+    name?: string;
     email: string;
-    password: string;
+    password?: string;
+    otp?: number; 
     createdAt?: Date;
     updatedAt?: Date;
 }
 
 export interface UserInput
-  extends Optional<UserAttribute, "id" | "slug"> {}
+  extends Optional<UserAttribute, "id" | "slug" | "otp" | "password"> {}
 
 export interface UserOutput extends Required<UserAttribute> {}
 
@@ -28,6 +29,7 @@ class User
   public email!: string;
   public slug!: string;
   public password!: string;
+  public otp!: number;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -43,21 +45,22 @@ User.init(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
     },
     email: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      // allowNull: false
     },
     slug: {
       type: DataTypes.STRING,
-      // allowNull: false,
-      // unique: true
     },
     password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+      type: DataTypes.STRING,
+      // allowNull: true,
+      // unique: true
+    },
+    otp: {
+      type: DataTypes.INTEGER,
     },
   },
   {

@@ -20,7 +20,6 @@ export const loginUser = async (
   
 export const verifyEmail = async (payload:emailVerification) : Promise<any> => {
   return await service.verifyEmail(payload);
-  // console.log('hii verifyEmail');
 }
 
 export const verifyOtp = async (payload: number) : Promise<any> => {

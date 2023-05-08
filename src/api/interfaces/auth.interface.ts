@@ -13,5 +13,6 @@ export interface LoginUser {
 }
 
 export interface emailVerification {
-    email: string
+    email: string;
+    otp?: number;
 }
