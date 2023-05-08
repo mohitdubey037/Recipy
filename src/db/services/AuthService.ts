@@ -48,13 +48,13 @@ export const createUser = async (
 ): Promise<any> => {
     // let slug = kebabCase(payload.name);
     if (payload.password) {
-      const findUser = await authDal.findUserByEmail(payload.email, 'register');
       const hashed = await hashPassword(payload?.password);
       payload.password = hashed;
+      const findUser = await authDal.findUserByEmailAndUpdate(payload);
     }
 
-    const result = await authDal.createUserService(payload);
-    return result; 
+    // const result = await authDal.createUserService(payload);
+    return {}; 
 }
 
 export const loginUser = async (

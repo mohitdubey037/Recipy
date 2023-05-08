@@ -41,6 +41,11 @@ export const findUserByEmail = async(email: string, type: string)=> {
    
 }
 
+export const findUserByEmailAndUpdate = async(payload: UserInput) => {
+	const findUser = await User.findOne({ where: { email: payload.email } });
+	return findUser?.update(payload)
+}
+
 export const createUserService = async (body: UserInput) => {
 	const createUser = await User.create(body);
 	if (!createUser) {
