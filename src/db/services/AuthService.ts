@@ -51,10 +51,11 @@ export const createUser = async (
       const hashed = await hashPassword(payload?.password);
       payload.password = hashed;
       const findUser = await authDal.findUserByEmailAndUpdate(payload);
+      return findUser;
     }
 
     // const result = await authDal.createUserService(payload);
-    return {}; 
+    // return {}; 
 }
 
 export const loginUser = async (
