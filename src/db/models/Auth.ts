@@ -10,13 +10,13 @@ interface UserAttribute {
     name?: string;
     email: string;
     password?: string;
-    otp?: number; 
+    // otp?: number; 
     createdAt?: Date;
     updatedAt?: Date;
 }
 
 export interface UserInput
-  extends Optional<UserAttribute, "id" | "slug" | "otp" | "password"> {}
+  extends Optional<UserAttribute, "id" | "slug" | "password"> {}
 
 export interface UserOutput extends Required<UserAttribute> {}
 
@@ -29,7 +29,7 @@ class User
   public email!: string;
   public slug!: string;
   public password!: string;
-  public otp!: number;
+  // public otp!: number;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -59,9 +59,9 @@ User.init(
       // allowNull: true,
       // unique: true
     },
-    otp: {
-      type: DataTypes.INTEGER,
-    },
+    // otp: {
+    //   type: DataTypes.INTEGER,
+    // },
   },
   {
     sequelize: sequelizeConnection,

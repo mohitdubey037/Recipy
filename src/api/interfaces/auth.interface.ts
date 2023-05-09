@@ -1,5 +1,3 @@
-import { UserOutput } from "../../db/models/Auth";
-
 export interface CreateUser {
     name: string;
     email: string;
@@ -10,9 +8,4 @@ export interface CreateUser {
 export interface LoginUser {
     email: string;
     password: string;
-}
-
-export interface emailVerification {
-    email: string;
-    otp?: number;
 }

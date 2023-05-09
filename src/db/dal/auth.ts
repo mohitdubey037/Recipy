@@ -41,10 +41,10 @@ export const findUserByEmail = async(email: string, type: string)=> {
    
 }
 
-export const findUserByEmailAndUpdate = async(payload: UserInput) => {
-	const findUser = await User.findOne({ where: { email: payload.email } });
-	return findUser?.update(payload)
-}
+// export const findUserByEmailAndUpdate = async(payload: UserInput) => {
+// 	const findUser = await User.findOne({ where: { email: payload.email } });
+// 	return findUser?.update(payload)
+// }
 
 export const createUserService = async (body: UserInput) => {
 	const createUser = await User.create(body);
@@ -62,11 +62,3 @@ export const createUserService = async (body: UserInput) => {
 export const comparePassword = (passwordAttempt: string, hashedPassword: string) => {
 	return compare(passwordAttempt, hashedPassword);
 };
-
-export const findById = async (otp: number): Promise<Object> => {
-	const findUser = await User.findOne({ where: { otp } });
-	if (!findUser) {
-		throw new Error("No User found");
-	}
-	return findUser
-  };

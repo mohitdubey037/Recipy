@@ -1,15 +1,18 @@
 import { DataTypes, Model } from "sequelize";
+import { Optional } from "sequelize";
 
 import sequelizeConnection from "../config";
 
 interface OtpAttribute {
     email: string;
     otp: number;
-    otpExpires: number;
+    otpExpires?: number;
 }
 
 // export interface OtpInput
 //   extends <OtpAttribute> {}
+export interface OtpInput
+  extends Optional<OtpAttribute, "otpExpires"> {}
 
 export interface OtpOutput extends Required<OtpAttribute> {}
 
