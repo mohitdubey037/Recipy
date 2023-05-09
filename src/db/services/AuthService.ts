@@ -43,11 +43,10 @@ export const createUser = async (
       const findUser = await authDal.findUserByEmail(payload.email, 'register');
       const hashed = await hashPassword(payload?.password);
       payload.password = hashed;
-      return findUser;
     }
 
-    // const result = await authDal.createUserService(payload);
-    // return {}; 
+    const result = await authDal.createUserService(payload);
+    return result
 }
 
 export const loginUser = async (
