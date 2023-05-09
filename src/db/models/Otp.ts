@@ -17,9 +17,9 @@ class Otp
   extends Model<OtpAttribute>
   implements OtpAttribute
 {
-    public email!: string;
-    public otp!: number;
-    public otpExpires!: number;
+  public email!: string;
+  public otp!: number;
+  public otpExpires!: number;
 
   // timestamps!
   public readonly createdAt!: Date;
