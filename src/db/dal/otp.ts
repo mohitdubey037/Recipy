@@ -1,4 +1,4 @@
-import Otp from "../models/Auth";
+import Otp from "../models/Otp";
 import { OtpInput, OtpOutput } from "../models/Otp";
 import httpStatus from 'http-status';
 

@@ -7,9 +7,9 @@ import { Optional } from "sequelize";
 interface UserAttribute {
     id: number;
     slug: string;
-    name?: string;
+    name: string;
     email: string;
-    password?: string;
+    password: string;
     // otp?: number; 
     createdAt?: Date;
     updatedAt?: Date;

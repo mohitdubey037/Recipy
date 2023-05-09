@@ -35,3 +35,5 @@ otpRouter.post('/verifyOtp',async (req: Request, res: Response) => {
         });
     }
 })
+
+export default otpRouter;

@@ -6,9 +6,11 @@ import reviewsRouter from "./reviews";
 import tagsRouter from "./tags";
 import postsRouter from "./posts";
 import authRouter from './auth';
+import otpRouter from './otp';
 
 const router = Router();
 
+router.use('/auth', otpRouter);
 router.use("/categories", categoriesRouter);
 router.use("/recipes", recipesRouter);
 router.use("/ingredients", ingredientsRouter);
