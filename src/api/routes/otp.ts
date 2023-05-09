@@ -11,18 +11,19 @@ otpRouter.post('/registerEmail', async (req: Request, res: Response) => {
         await controller.registerEmail(payload);
         return res.status(200).send('Email sent successfully');
     } catch (error: any) {
-        console.log(error, 'error')
+        return res.status(error.status).send({
+            message: error.message,
+            success: false,
+            flag: 0
+        });
     }
 })  
 
 otpRouter.post('/verifyOtp',async (req: Request, res: Response) => {
-    // console.log('req.body', req.body);
     const payload: {
         email: string
         otp: number
     } = req.body;
-
-    
     try {
         await controller.verifyOtp(payload);
         return res.status(200).send({

@@ -39,7 +39,7 @@ Otp.init(
     },
     otpExpires: {
         type: DataTypes.DATE,
-        defaultValue: Date.now() + 43200
+        defaultValue: new Date(new Date().getTime() + (5 * 60 * 1000))
     }
   },
   {
@@ -50,3 +50,4 @@ Otp.init(
 );
 
 export default Otp;
+

@@ -3,22 +3,39 @@ import { OtpInput, OtpOutput } from "../models/Otp";
 import httpStatus from 'http-status';
 import { Op } from "sequelize";
 
+export const deleteById = async (otp: number): Promise<boolean> => {
+    const deleteOtp = await Otp.destroy({
+        where: {otp}
+    })
+
+    return !!deleteOtp
+}
+ 
 export const findById = async ({ email, otp }: {
     otp: number
     email: string
-}): Promise<Object> => {
+}): Promise<any> => {
 	const findUser = await Otp.findOne({ where: { email, otp } });
 
+	const date: Date = new Date();
+
 	if (!findUser) {
-		throw new Error("No User found");
+		throw new Error("OTP Invalid");
 	}
-	return findUser
+
+	else {
+		const validUntil = new Date(findUser?.otpExpires); 
+		if (validUntil <= date) {
+			throw new Error("Token has been expired")
+		}
+		else {
+			return findUser
+		}
+	}
 };
 
 export const createOtpService = async (body: OtpInput) => {
-	const expiryDate = 30;
 	const createUser = await Otp.create(body);
-
 	if (!createUser) {
 		const error = {
 			status: httpStatus.NOT_FOUND,
@@ -29,7 +46,3 @@ export const createOtpService = async (body: OtpInput) => {
 	}
 	return createUser;
 };
-
-function moment() {
-	throw new Error("Function not implemented.");
-}

@@ -38,7 +38,6 @@ const generateJWTToken = (payload: Object) => {
 export const createUser = async (
     payload: UserInput
 ): Promise<any> => {
-    // let slug = kebabCase(payload.name);
     if (payload.password) {
       const findUser = await authDal.findUserByEmail(payload.email, 'register');
       const hashed = await hashPassword(payload?.password);

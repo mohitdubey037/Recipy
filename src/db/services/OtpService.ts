@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import * as otpDal from "../dal/otp";
+import * as authDal from "../dal/auth";
 import ENV from 'dotenv';
 import { emailVerification } from "../../api/interfaces/otp.interface";
 ENV.config();
@@ -14,6 +15,7 @@ const generateOTP = (): number => {
 
 export const registerEmail = async (payload:emailVerification): Promise<any> => {
     // let testAccount = await nodemailer.createTestAccount();
+    const findUser = await authDal.findUserByEmail(payload.email, 'register');
     let generatedOtp = generateOTP();
   
     try {
@@ -56,15 +58,16 @@ export const registerEmail = async (payload:emailVerification): Promise<any> => 
   
     // return info;
 }
+
+export const deleteById = async (otp: number): Promise<boolean> => {
+  return otpDal.deleteById(otp);
+};
   
 export const verifyOtp = async(payload: {
     otp: number
     email: string
 }) : Promise<any> => {
-    const data = await otpDal.findById(payload);
-	  console.log('findUser', data);
-
-    // const date = new Date();
-    
-
+    const data = await otpDal.findById(payload)
+    const d = await otpDal.deleteById(data.otp)
+    return d
 }
