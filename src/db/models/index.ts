@@ -7,6 +7,7 @@ import RecipeIngredient from "./RecipeIngredient";
 import Category from "./Category";
 import Post from './Post';
 import User from './Auth';
+import Otp from "./Otp";
 export {
   Tag,
   Recipe,
@@ -16,5 +17,6 @@ export {
   RecipeIngredient,
   Category,
   Post,
-  User
+  User,
+  Otp
 };
