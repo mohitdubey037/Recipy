@@ -16,9 +16,13 @@ otpRouter.post('/registerEmail', async (req: Request, res: Response) => {
 })  
 
 otpRouter.post('/verifyOtp',async (req: Request, res: Response) => {
+    // console.log('req.body', req.body);
     const payload: {
+        email: string
         otp: number
     } = req.body;
+
+    
     try {
         await controller.verifyOtp(payload);
         return res.status(200).send({

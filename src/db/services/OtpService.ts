@@ -59,6 +59,12 @@ export const registerEmail = async (payload:emailVerification): Promise<any> => 
   
 export const verifyOtp = async(payload: {
     otp: number
+    email: string
 }) : Promise<any> => {
-    await otpDal.findById(payload.otp)
+    const data = await otpDal.findById(payload);
+	  console.log('findUser', data);
+
+    // const date = new Date();
+    
+
 }

@@ -10,7 +10,6 @@ interface UserAttribute {
     name: string;
     email: string;
     password: string;
-    // otp?: number; 
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -29,7 +28,6 @@ class User
   public email!: string;
   public slug!: string;
   public password!: string;
-  // public otp!: number;
 
   // timestamps!
   public readonly createdAt!: Date;
@@ -59,9 +57,6 @@ User.init(
       // allowNull: true,
       // unique: true
     },
-    // otp: {
-    //   type: DataTypes.INTEGER,
-    // },
   },
   {
     sequelize: sequelizeConnection,
